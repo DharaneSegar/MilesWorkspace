@@ -1,0 +1,27 @@
+{
+  "$schema" : "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
+  "inputType" : "JSON",
+  "id" : "http://wso2jsonschema.org",
+  "title" : "root",
+  "type" : "array",
+  "items" : [ {
+    "properties" : {
+      "miles" : {
+        "id" : "http://wso2jsonschema.org/0/miles",
+        "type" : "object",
+        "properties" : {
+          "milesFlown" : {
+            "id" : "http://wso2jsonschema.org/0/miles/milesFlown",
+            "type" : "number"
+          },
+          "customerId" : {
+            "id" : "http://wso2jsonschema.org/0/miles/customerId",
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "id" : "http://wso2jsonschema.org/0",
+    "type" : "object"
+  } ]
+}

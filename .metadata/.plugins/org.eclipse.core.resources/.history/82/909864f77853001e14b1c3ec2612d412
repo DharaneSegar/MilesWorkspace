@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/miles" name="MilesAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/{customerId}">
+        <inSequence>
+            <clone>
+                <target>
+                    <sequence>
+                        <call>
+                            <endpoint key="BritishAirwaysEndpoint"/>
+                        </call>
+                        <datamapper config="gov:datamapper/BritishConfig.dmc" inputSchema="gov:datamapper/BritishConfig_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/BritishConfig_outputSchema.json" outputType="JSON" xsltStyleSheet="gov:datamapper/BritishConfig_xsltStyleSheet.xml"/>
+                    </sequence>
+                </target>
+                <target>
+                    <sequence>
+                        <call>
+                            <endpoint key="QatarAirwaysEndpoint"/>
+                        </call>
+                        <datamapper config="gov:datamapper/QatarConfig.dmc" inputSchema="gov:datamapper/QatarConfig_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/QatarConfig_outputSchema.json" outputType="JSON" xsltStyleSheet="gov:datamapper/QatarConfig_xsltStyleSheet.xml"/>
+                    </sequence>
+                </target>
+            </clone>
+            <aggregate>
+                <completeCondition>
+                    <messageCount max="2" min="2"/>
+                </completeCondition>
+                <onComplete aggregateElementType="root" expression="json-eval($.checkIn)">
+                    <datamapper config="gov:datamapper/AggregateConfig.dmc" inputSchema="gov:datamapper/AggregateConfig_inputSchema.json" inputType="JSON" outputSchema="gov:datamapper/AggregateConfig_outputSchema.json" outputType="JSON" xsltStyleSheet="gov:datamapper/AggregateConfig_xsltStyleSheet.xml"/>
+                    <respond/>
+                </onComplete>
+            </aggregate>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

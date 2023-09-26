@@ -1,0 +1,12 @@
+map_S_miles_S_root = function(){ 
+var outputroot={};
+
+outputroot =  {};
+outputroot.checkIn =  {};
+outputroot.checkIn.milesFlown = inputmiles.milesFlown;
+outputroot.checkIn.customerId = inputmiles.customerId;
+return outputroot;
+};
+
+
+

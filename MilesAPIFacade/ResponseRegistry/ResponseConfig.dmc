@@ -1,0 +1,20 @@
+map_S_root_S_root = function(){ 
+var outputroot={};
+
+var count_i_inputroot_42d068ea_2a66_4971_800e_37467d4bb3aa = 0;
+outputroot =  {};
+outputroot.checkInInfo =  [];
+
+for(i_inputroot_42d068ea_2a66_4971_800e_37467d4bb3aa in inputroot){
+outputroot.checkInInfo[count_i_inputroot_42d068ea_2a66_4971_800e_37467d4bb3aa] =  {};
+outputroot.checkInInfo[count_i_inputroot_42d068ea_2a66_4971_800e_37467d4bb3aa].milesFlown = inputroot[i_inputroot_42d068ea_2a66_4971_800e_37467d4bb3aa].miles.milesFlown;
+outputroot.checkInInfo[count_i_inputroot_42d068ea_2a66_4971_800e_37467d4bb3aa].customerId = inputroot[i_inputroot_42d068ea_2a66_4971_800e_37467d4bb3aa].miles.customerId;
+
+count_i_inputroot_42d068ea_2a66_4971_800e_37467d4bb3aa++;
+}
+return outputroot;
+};
+
+
+
+

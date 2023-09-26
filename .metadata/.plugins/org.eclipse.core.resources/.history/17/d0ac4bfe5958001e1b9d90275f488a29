@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/miles" name="MilesAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/">
+        <inSequence>
+            <log level="full"/>
+            <clone>
+                <target>
+                    <sequence>
+                        <call>
+                            <endpoint key="BritishAirwaysEndpoint"/>
+                        </call>
+                        <log level="full"/>
+                    </sequence>
+                </target>
+                <target>
+                    <sequence>
+                        <call>
+                            <endpoint key="QatarAirwaysEndpoint"/>
+                        </call>
+                        <log level="full"/>
+                    </sequence>
+                </target>
+            </clone>
+            <aggregate>
+                <completeCondition>
+                    <messageCount max="-1" min="-1"/>
+                </completeCondition>
+                <onComplete aggregateElementType="root" expression="">
+                    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+                    <log level="full"/>
+                </onComplete>
+            </aggregate>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

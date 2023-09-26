@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/miles" name="MilesAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/{customerId}">
+        <inSequence>
+            <clone>
+                <target>
+                    <sequence>
+                        <payloadFactory media-type="json">
+                            <format>{ "customerId": "$1" }</format>
+                            <args>
+                                <arg evaluator="xml" expression="$ctx:uri.var.customerId"/>
+                            </args>
+                        </payloadFactory>
+                        <call>
+                            <endpoint key="BritishAirwaysEndpoint"/>
+                        </call>
+                    </sequence>
+                </target>
+                <target>
+                    <sequence>
+                        <payloadFactory media-type="json">
+                            <format>{ "customerId": "$1" }</format>
+                            <args>
+                                <arg evaluator="xml" expression="$ctx:uri.var.customerId"/>
+                            </args>
+                        </payloadFactory>
+                        <call>
+                            <endpoint key="QatarAirwaysEndpoint"/>
+                        </call>
+                    </sequence>
+                </target>
+            </clone>
+            <aggregate>
+                <completeCondition>
+                    <messageCount max="2" min="2"/>
+                </completeCondition>
+                <onComplete aggregateElementType="root" expression="xpath(/miles)"/>
+            </aggregate>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>
